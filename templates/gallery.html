@@ -1,0 +1,37 @@
+<!-- templates/gallery.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Art Gallery</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { text-align: center; color: #333; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .art-item { background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .art-image { width: 100%; height: auto; border-radius: 4px; }
+        .art-info { margin-top: 10px; font-size: 14px; }
+        .back-link { display: block; text-align: center; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Art Gallery</h1>
+        <a href="/" class="back-link">← Back to Generator</a>
+        
+        <div class="gallery">
+            {% for art in arts %}
+            <div class="art-item">
+                <img src="data:image/png;base64,{{ art.image_data }}" alt="Generated Art" class="art-image">
+                <div class="art-info">
+                    <p>Seed: {{ art.seed }}</p>
+                    {% if art.prompt %}<p>Prompt: {{ art.prompt }}</p>{% endif %}
+                    <p>By: {% if art.user %}{{ art.user.username }}{% else %}Anonymous{% endif %}</p>
+                    <p>{{ art.created_at|date:"M d, Y" }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
